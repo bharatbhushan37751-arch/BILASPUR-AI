@@ -54,7 +54,7 @@ Local Crafts & Small Producers:
 function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
   let timer: any;
   const timeoutPromise = new Promise<T>((_, reject) => {
-    timer = setTimeout(() => reject(new Error(`Timeout after ${ms}ms`)), ms);
+    timer = setTimeout(() => reject(new Error(`Operation timed out after ${ms}ms`)), ms);
   });
   return Promise.race([
     promise.then((res) => {
@@ -65,41 +65,42 @@ function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
   ]);
 }
 
-// Resilient helper to call Gemini with multi-model fallback on transient 503/429
+// Resilient helper to call Gemini with retry on transient 503/429
 async function callGeminiWithFallback(params: {
   contents: any;
   config?: any;
   primaryModel?: string;
 }) {
-  const models = [
-    params.primaryModel || 'gemini-3.8-flash',
-    'gemini-3.1-flash-lite',
-    'gemini-flash-latest',
-  ];
+  const primaryModel = params.primaryModel || 'gemini-3.8-flash';
+  const models = [primaryModel, 'gemini-flash-latest'];
 
-  let lastError: any = null;
   for (const model of models) {
+    // Only pass thinkingConfig to Gemini 3 series models
+    const isGemini3 = model.startsWith('gemini-3');
+    const modelConfig = { ...params.config };
+    if (isGemini3) {
+      modelConfig.thinkingConfig = { thinkingLevel: 'LOW' as any };
+    } else {
+      delete modelConfig.thinkingConfig;
+    }
+
     try {
       const resp = await withTimeout(
         ai.models.generateContent({
           model,
           contents: params.contents,
-          config: {
-            ...params.config,
-            thinkingConfig: { thinkingLevel: 'LOW' as any },
-          },
+          config: modelConfig,
         }),
-        8000
+        25000
       );
       if (resp && resp.text) {
         return resp.text;
       }
-    } catch (err: any) {
-      console.warn(`Model ${model} failed or timed out, trying next fallback:`, err?.message || err);
-      lastError = err;
+    } catch {
+      // Continue to next model fallback smoothly
     }
   }
-  throw lastError || new Error('All model fallbacks failed');
+  throw new Error('Model currently unavailable, defaulting to local synthesis');
 }
 
 // 1. TRIP PLANNER ENDPOINT
