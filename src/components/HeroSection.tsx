@@ -1,5 +1,6 @@
 import React from 'react';
 import { Sparkles, Bot, MapPin, Compass, ArrowRight, ShieldCheck, Waves, Mountain, Utensils } from 'lucide-react';
+import { SafeImage } from './SafeImage';
 
 interface HeroSectionProps {
   onPlanTripClick: () => void;
@@ -96,13 +97,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Right Column: Hero Visual Feature Card */}
           <div className="lg:col-span-5 relative">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-stone-200/80 bg-stone-900 group">
-              <img
-                src="/src/assets/images/hero_bilaspur_lake_1791210560706.jpg"
+              <SafeImage
+                src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"
+                fallbackSrc="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80"
                 alt="Gobind Sagar Lake in Bilaspur Himachal Pradesh"
-                referrerPolicy="no-referrer"
                 className="w-full h-[400px] object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-900/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-900/40 to-transparent pointer-events-none" />
 
               <div className="absolute bottom-0 inset-x-0 p-6 text-white text-left">
                 <div className="flex items-center gap-2 mb-2">

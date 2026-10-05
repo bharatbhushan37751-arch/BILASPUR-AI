@@ -69,7 +69,7 @@ export const BILASPUR_PLACES: PlaceItem[] = [
     duration: '2 - 4 hours',
     highlights: ['Speedboat rides & kayaking', 'Submerged temple spires visible in summer', 'Stunning mountain reflection sunsets'],
     mapSearchQuery: 'Gobind Sagar Lake Bilaspur Himachal Pradesh',
-    image: '/src/assets/images/hero_bilaspur_lake_1791210560706.jpg',
+    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 'bhakra-dam',
@@ -85,7 +85,7 @@ export const BILASPUR_PLACES: PlaceItem[] = [
     duration: '2 - 3 hours',
     highlights: ['226m soaring height', 'Bhakra Power House viewpoint', 'Educational exhibits on modern Indian engineering'],
     mapSearchQuery: 'Bhakra Dam Bilaspur Himachal Pradesh',
-    image: '/src/assets/images/hero_bilaspur_lake_1791210560706.jpg',
+    image: 'https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 'naina-devi',
@@ -101,7 +101,7 @@ export const BILASPUR_PLACES: PlaceItem[] = [
     duration: '3 - 5 hours',
     highlights: ['Scenic aerial ropeway ride', '360° views of Anandpur Sahib & Gobind Sagar Lake', 'Deep spiritual tranquility and ancient rituals'],
     mapSearchQuery: 'Shri Naina Devi Ji Temple Bilaspur Himachal Pradesh',
-    image: '/src/assets/images/naina_devi_shrine_1791210578776.jpg',
+    image: 'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 'bandla-dhar',
@@ -117,7 +117,7 @@ export const BILASPUR_PLACES: PlaceItem[] = [
     duration: '3 - 4 hours',
     highlights: ['Tandem paragliding joyflights', 'Crisp pine forest fragrance & camping points', 'Unobstructed sunset horizon over lower Himalayas'],
     mapSearchQuery: 'Bandla Dhar Bilaspur Himachal Pradesh',
-    image: '/src/assets/images/bandla_paragliding_1791210611540.jpg',
+    image: 'https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 'vyas-gufa',
@@ -133,7 +133,7 @@ export const BILASPUR_PLACES: PlaceItem[] = [
     duration: '1 hour',
     highlights: ['Natural limestone cave alcove', 'Riverbank walking path', 'Origin story of the name Bilaspur / Vyaspur'],
     mapSearchQuery: 'Vyas Gufa Bilaspur Himachal Pradesh',
-    image: '/src/assets/images/naina_devi_shrine_1791210578776.jpg',
+    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 'markandeya-temple',
@@ -149,7 +149,7 @@ export const BILASPUR_PLACES: PlaceItem[] = [
     duration: '2 hours',
     highlights: ['Perennial medicinal spring Kund', 'Lush terraced valley setting', 'Rich Vedic lore and local community fair'],
     mapSearchQuery: 'Markandeya Ji Temple Bilaspur Himachal Pradesh',
-    image: '/src/assets/images/naina_devi_shrine_1791210578776.jpg',
+    image: 'https://images.unsplash.com/photo-1596895111956-bf1cf0599ce5?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 'koldam-reservoir',
@@ -165,7 +165,7 @@ export const BILASPUR_PLACES: PlaceItem[] = [
     duration: '2 hours',
     highlights: ['Steep limestone mountain gorge', 'Vibrant turquoise-green river water', 'Peaceful scenic drive away from highway crowds'],
     mapSearchQuery: 'Koldam Dam Bilaspur Himachal Pradesh',
-    image: '/src/assets/images/hero_bilaspur_lake_1791210560706.jpg',
+    image: 'https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 'bahadurpur-fort',
@@ -181,7 +181,7 @@ export const BILASPUR_PLACES: PlaceItem[] = [
     duration: '4 - 5 hours (half day trip)',
     highlights: ['Cool microclimate with deodar groves', 'Panoramic sight of Shimla hills and Ropar plains', 'Ancient stone ramparts from the 1620s'],
     mapSearchQuery: 'Bahadurpur Fort Bilaspur Himachal Pradesh',
-    image: '/src/assets/images/bandla_paragliding_1791210611540.jpg',
+    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80',
   }
 ];
 
@@ -197,7 +197,7 @@ export const BILASPUR_FOOD: FoodItem[] = [
     tasteProfile: 'Warm, spiced, subtly sour (khatta) & sweet balance without onion/garlic',
     whereToTry: 'Speciality Himachali dhabas along NH-205 & local festival gatherings',
     priceEstimate: '₹150 - ₹250 per thali',
-    image: '/src/assets/images/himachali_dham_meal_1791210596609.jpg',
+    image: 'https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 'sepu-vadi',
@@ -210,7 +210,7 @@ export const BILASPUR_FOOD: FoodItem[] = [
     tasteProfile: 'Earthy, herbaceous with silky texture and gentle tang',
     whereToTry: 'Local Bilaspur town rasoi dhabas and traditional family restaurants',
     priceEstimate: '₹120 - ₹180',
-    image: '/src/assets/images/himachali_dham_meal_1791210596609.jpg',
+    image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 'siddu-ghee',
@@ -223,7 +223,7 @@ export const BILASPUR_FOOD: FoodItem[] = [
     tasteProfile: 'Hearty, soft steamed texture, rich nutty and savory center',
     whereToTry: 'Roadside tea stalls around Swarghat, Bandla Dhar ridge kiosks',
     priceEstimate: '₹60 - ₹100 per piece',
-    image: '/src/assets/images/himachali_dham_meal_1791210596609.jpg',
+    image: 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 'babru',
@@ -236,7 +236,7 @@ export const BILASPUR_FOOD: FoodItem[] = [
     tasteProfile: 'Crispy exterior, soft savory lentil interior, warm and satisfying',
     whereToTry: 'Old Bilaspur bazaar breakfast stalls & College road tea corners',
     priceEstimate: '₹40 - ₹70',
-    image: '/src/assets/images/himachali_dham_meal_1791210596609.jpg',
+    image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 'patande',
@@ -249,7 +249,7 @@ export const BILASPUR_FOOD: FoodItem[] = [
     tasteProfile: 'Delicate, lightly sweet and comforting melt-in-mouth finish',
     whereToTry: 'Traditional homestays around Markand valley and local sweet makers',
     priceEstimate: '₹50 - ₹90',
-    image: '/src/assets/images/himachali_dham_meal_1791210596609.jpg',
+    image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 'sutlej-fish',
@@ -262,7 +262,7 @@ export const BILASPUR_FOOD: FoodItem[] = [
     tasteProfile: 'Crispy skin, tender flaky fresh fish, zesty ajwain aroma',
     whereToTry: 'Fisheries Co-op stall near Gobind Sagar Ghat and NH-205 fish points',
     priceEstimate: '₹140 - ₹240',
-    image: '/src/assets/images/hero_bilaspur_lake_1791210560706.jpg',
+    image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=1200&q=80',
   }
 ];
 

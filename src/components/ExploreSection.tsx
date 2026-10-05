@@ -22,6 +22,7 @@ import {
   BILASPUR_BUSINESSES,
   PlaceItem 
 } from '../data/bilaspurData';
+import { SafeImage } from './SafeImage';
 
 export const ExploreSection: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<'places' | 'food' | 'products' | 'businesses'>('places');
@@ -173,13 +174,13 @@ export const ExploreSection: React.FC = () => {
                 >
                   {/* Image container */}
                   <div className="relative h-48 bg-stone-900 overflow-hidden">
-                    <img
+                    <SafeImage
                       src={place.image}
+                      fallbackSrc="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80"
                       alt={place.name}
-                      referrerPolicy="no-referrer"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-transparent to-transparent pointer-events-none" />
                     
                     <div className="absolute top-3 left-3">
                       <span className="text-[11px] font-semibold tracking-wider text-emerald-900 bg-emerald-50/90 px-2 py-0.5 rounded shadow-xs">
@@ -267,10 +268,10 @@ export const ExploreSection: React.FC = () => {
                 >
                   {food.image && (
                     <div className="h-44 bg-stone-900 overflow-hidden relative">
-                      <img
+                      <SafeImage
                         src={food.image}
+                        fallbackSrc="https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?auto=format&fit=crop&w=1200&q=80"
                         alt={food.name}
-                        referrerPolicy="no-referrer"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute top-3 left-3">
