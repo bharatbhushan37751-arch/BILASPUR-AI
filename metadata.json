@@ -1,0 +1,6 @@
+{
+  "name": "Bilaspur AI",
+  "description": "AI-powered local tourism and discovery assistant for Bilaspur, Himachal Pradesh.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
