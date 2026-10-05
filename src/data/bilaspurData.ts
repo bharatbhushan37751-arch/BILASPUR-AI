@@ -69,7 +69,7 @@ export const BILASPUR_PLACES: PlaceItem[] = [
     duration: '2 - 4 hours',
     highlights: ['Speedboat rides & kayaking', 'Submerged temple spires visible in summer', 'Stunning mountain reflection sunsets'],
     mapSearchQuery: 'Gobind Sagar Lake Bilaspur Himachal Pradesh',
-    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/destinations/gobind-sagar.jpg',
   },
   {
     id: 'bhakra-dam',
@@ -85,7 +85,7 @@ export const BILASPUR_PLACES: PlaceItem[] = [
     duration: '2 - 3 hours',
     highlights: ['226m soaring height', 'Bhakra Power House viewpoint', 'Educational exhibits on modern Indian engineering'],
     mapSearchQuery: 'Bhakra Dam Bilaspur Himachal Pradesh',
-    image: 'https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/destinations/bhakra-dam.jpg',
   },
   {
     id: 'naina-devi',
@@ -101,7 +101,7 @@ export const BILASPUR_PLACES: PlaceItem[] = [
     duration: '3 - 5 hours',
     highlights: ['Scenic aerial ropeway ride', '360° views of Anandpur Sahib & Gobind Sagar Lake', 'Deep spiritual tranquility and ancient rituals'],
     mapSearchQuery: 'Shri Naina Devi Ji Temple Bilaspur Himachal Pradesh',
-    image: 'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/destinations/naina-devi.jpg',
   },
   {
     id: 'bandla-dhar',
@@ -117,7 +117,7 @@ export const BILASPUR_PLACES: PlaceItem[] = [
     duration: '3 - 4 hours',
     highlights: ['Tandem paragliding joyflights', 'Crisp pine forest fragrance & camping points', 'Unobstructed sunset horizon over lower Himalayas'],
     mapSearchQuery: 'Bandla Dhar Bilaspur Himachal Pradesh',
-    image: 'https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/destinations/bandla-dhar.jpg',
   },
   {
     id: 'vyas-gufa',
@@ -133,7 +133,7 @@ export const BILASPUR_PLACES: PlaceItem[] = [
     duration: '1 hour',
     highlights: ['Natural limestone cave alcove', 'Riverbank walking path', 'Origin story of the name Bilaspur / Vyaspur'],
     mapSearchQuery: 'Vyas Gufa Bilaspur Himachal Pradesh',
-    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/destinations/vyas-gufa.jpg',
   },
   {
     id: 'markandeya-temple',
@@ -149,7 +149,7 @@ export const BILASPUR_PLACES: PlaceItem[] = [
     duration: '2 hours',
     highlights: ['Perennial medicinal spring Kund', 'Lush terraced valley setting', 'Rich Vedic lore and local community fair'],
     mapSearchQuery: 'Markandeya Ji Temple Bilaspur Himachal Pradesh',
-    image: 'https://images.unsplash.com/photo-1596895111956-bf1cf0599ce5?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/destinations/markandeya-temple.jpg',
   },
   {
     id: 'koldam-reservoir',
@@ -165,7 +165,7 @@ export const BILASPUR_PLACES: PlaceItem[] = [
     duration: '2 hours',
     highlights: ['Steep limestone mountain gorge', 'Vibrant turquoise-green river water', 'Peaceful scenic drive away from highway crowds'],
     mapSearchQuery: 'Koldam Dam Bilaspur Himachal Pradesh',
-    image: 'https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/destinations/koldam.jpg',
   },
   {
     id: 'bahadurpur-fort',
@@ -181,7 +181,7 @@ export const BILASPUR_PLACES: PlaceItem[] = [
     duration: '4 - 5 hours (half day trip)',
     highlights: ['Cool microclimate with deodar groves', 'Panoramic sight of Shimla hills and Ropar plains', 'Ancient stone ramparts from the 1620s'],
     mapSearchQuery: 'Bahadurpur Fort Bilaspur Himachal Pradesh',
-    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/destinations/bahadurpur-fort.jpg',
   }
 ];
 

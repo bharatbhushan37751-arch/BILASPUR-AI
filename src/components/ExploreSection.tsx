@@ -176,7 +176,7 @@ export const ExploreSection: React.FC = () => {
                   <div className="relative h-48 bg-stone-900 overflow-hidden">
                     <SafeImage
                       src={place.image}
-                      fallbackSrc="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80"
+                      fallbackSrc="https://upload.wikimedia.org/wikipedia/commons/7/70/BilaspurCityHimachal.jpg"
                       alt={place.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />

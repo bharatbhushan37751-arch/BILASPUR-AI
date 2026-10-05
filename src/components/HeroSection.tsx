@@ -98,8 +98,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <div className="lg:col-span-5 relative">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-stone-200/80 bg-stone-900 group">
               <SafeImage
-                src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"
-                fallbackSrc="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80"
+                src="/images/destinations/gobind-sagar.jpg"
+                fallbackSrc="https://upload.wikimedia.org/wikipedia/commons/7/70/BilaspurCityHimachal.jpg"
                 alt="Gobind Sagar Lake in Bilaspur Himachal Pradesh"
                 className="w-full h-[400px] object-cover group-hover:scale-105 transition-transform duration-700"
               />

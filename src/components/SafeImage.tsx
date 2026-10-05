@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mountain, Image as ImageIcon } from 'lucide-react';
 
 interface SafeImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
@@ -8,7 +8,7 @@ interface SafeImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   containerClassName?: string;
 }
 
-const DEFAULT_FALLBACK = 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80';
+const DEFAULT_FALLBACK = 'https://upload.wikimedia.org/wikipedia/commons/7/70/BilaspurCityHimachal.jpg';
 
 export const SafeImage: React.FC<SafeImageProps> = ({
   src,
@@ -21,6 +21,12 @@ export const SafeImage: React.FC<SafeImageProps> = ({
   const [currentSrc, setCurrentSrc] = useState<string>(src);
   const [hasError, setHasError] = useState<boolean>(false);
   const [triedFallback, setTriedFallback] = useState<boolean>(false);
+
+  useEffect(() => {
+    setCurrentSrc(src);
+    setHasError(false);
+    setTriedFallback(false);
+  }, [src]);
 
   const handleError = () => {
     if (!triedFallback && fallbackSrc && fallbackSrc !== currentSrc) {
