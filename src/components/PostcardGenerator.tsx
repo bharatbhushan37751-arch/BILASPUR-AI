@@ -341,7 +341,7 @@ export const PostcardGenerator: React.FC = () => {
 
                 <div className="w-full flex items-center justify-between pt-2">
                   <span className="text-xs text-stone-500 font-mono">
-                    Format: {aspectRatio} · {quality === 'studio' ? 'Studio Pro' : 'Flash Preview'}
+                    Format: {aspectRatio} · {fallbackNotice ? 'Local Destination Photo (Fallback)' : (quality === 'studio' ? 'Studio Pro' : 'Flash Preview')}
                   </span>
                   <button
                     onClick={handleDownload}

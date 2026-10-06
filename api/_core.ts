@@ -677,6 +677,9 @@ export function matchLocalDestination(prompt: string): { title: string; imageUrl
   if (p.includes('bahadurpur') || p.includes('fort')) {
     return { title: 'Bahadurpur Fort', imageUrl: '/images/destinations/bahadurpur-fort.jpg' };
   }
+  if (p.includes('dham') || p.includes('feast') || p.includes('food') || p.includes('madra') || p.includes('sepu') || p.includes('siddu')) {
+    return { title: 'Authentic Bilaspuri Dham & Lakefront', imageUrl: '/images/destinations/gobind-sagar.jpg' };
+  }
   return { title: 'Gobind Sagar Lake', imageUrl: '/images/destinations/gobind-sagar.jpg' };
 }
 
