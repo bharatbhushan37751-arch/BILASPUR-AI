@@ -8,7 +8,8 @@ import {
   Sliders, 
   Check, 
   Camera, 
-  AlertCircle 
+  AlertCircle,
+  Info
 } from 'lucide-react';
 
 export const PostcardGenerator: React.FC = () => {
@@ -18,6 +19,10 @@ export const PostcardGenerator: React.FC = () => {
   const [generating, setGenerating] = useState<boolean>(false);
   const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [fallbackNotice, setFallbackNotice] = useState<{
+    isFallback: boolean;
+    title: string;
+  } | null>(null);
 
   // The 8 aspect ratios required by the feature specification
   const aspectRatios = [
@@ -59,6 +64,7 @@ export const PostcardGenerator: React.FC = () => {
 
     setGenerating(true);
     setError(null);
+    setFallbackNotice(null);
 
     try {
       const response = await fetch('/api/generate-image', {
@@ -73,10 +79,22 @@ export const PostcardGenerator: React.FC = () => {
 
       if (!response.ok) {
         const errData = await response.json().catch(() => ({}));
-        throw new Error(errData.error || `Server responded with ${response.status}`);
+        if (response.status === 429 || errData.error === 'IMAGE_GENERATION_QUOTA_EXCEEDED') {
+          setError('Image generation quota is temporarily exhausted. Please try again later.');
+          if (errData.fallbackImageUrl) {
+            setFallbackNotice({
+              isFallback: true,
+              title: errData.fallbackTitle || 'Authentic Bilaspur Destination',
+            });
+            setGeneratedImageUrl(errData.fallbackImageUrl);
+          }
+          return;
+        }
+        throw new Error(errData.message || errData.error || `Server responded with ${response.status}`);
       }
 
       const data = await response.json();
+      setFallbackNotice(null);
       setGeneratedImageUrl(data.imageUrl);
     } catch (err: any) {
       console.error('Image generation failed:', err);
@@ -219,7 +237,7 @@ export const PostcardGenerator: React.FC = () => {
                   }`}
                 >
                   <p className="font-bold">General Preview</p>
-                  <p className="text-[10px] text-stone-400 font-mono mt-0.5">gemini-3.1-flash-image-preview</p>
+                  <p className="text-[10px] text-stone-400 font-mono mt-0.5">gemini-3.1-flash-lite-image</p>
                 </button>
 
                 <button
@@ -232,7 +250,7 @@ export const PostcardGenerator: React.FC = () => {
                   }`}
                 >
                   <p className="font-bold">Studio Quality</p>
-                  <p className="text-[10px] text-stone-400 font-mono mt-0.5">gemini-3-pro-image-preview</p>
+                  <p className="text-[10px] text-stone-400 font-mono mt-0.5">gemini-3.1-flash-image</p>
                 </button>
               </div>
             </div>
@@ -294,13 +312,25 @@ export const PostcardGenerator: React.FC = () => {
 
             {!generating && generatedImageUrl && (
               <div className="w-full flex flex-col items-center space-y-4">
+                {fallbackNotice && (
+                  <div className="w-full p-3 bg-amber-50 border border-amber-300 rounded-xl flex items-start gap-2.5 text-xs text-amber-900 shadow-xs">
+                    <Info className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+                    <div className="text-left">
+                      <p className="font-bold text-amber-950">Fallback Destination Photo Displayed</p>
+                      <p className="text-[11px] text-amber-800 mt-0.5">
+                        Showing authentic verified photo for <strong>{fallbackNotice.title}</strong> because Gemini AI image generation quota is temporarily exhausted.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
                 <div
                   className="w-full max-h-[500px] rounded-xl overflow-hidden shadow-lg border border-stone-200 bg-stone-900 flex items-center justify-center relative group"
                   style={getAspectRatioStyle(aspectRatio)}
                 >
                   <img
                     src={generatedImageUrl}
-                    alt="Generated Bilaspur travel scene"
+                    alt="Bilaspur travel scene"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-contain"
                   />

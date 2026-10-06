@@ -74,7 +74,7 @@ export async function callGeminiWithFallback(params: {
     const isGemini3 = model.startsWith('gemini-3');
     const modelConfig = { ...params.config };
     if (isGemini3) {
-      modelConfig.thinkingConfig = { thinkingLevel: 'LOW' as any };
+      modelConfig.thinkingConfig = { thinkingBudget: 0 };
     } else {
       delete modelConfig.thinkingConfig;
     }
@@ -86,7 +86,7 @@ export async function callGeminiWithFallback(params: {
           contents: params.contents,
           config: modelConfig,
         }),
-        25000
+        7000
       );
       if (resp && resp.text) {
         return resp.text;
@@ -636,6 +636,64 @@ Feel free to ask for specific route directions, family schedules, traditional Dh
   return reply;
 }
 
+export class ImageGenerationQuotaError extends Error {
+  status: number;
+  code: string;
+  fallbackImageUrl: string;
+  fallbackTitle: string;
+  aspectRatio: string;
+
+  constructor(message: string, fallbackImageUrl: string, fallbackTitle: string, aspectRatio: string) {
+    super(message);
+    this.name = 'ImageGenerationQuotaError';
+    this.status = 429;
+    this.code = 'IMAGE_GENERATION_QUOTA_EXCEEDED';
+    this.fallbackImageUrl = fallbackImageUrl;
+    this.fallbackTitle = fallbackTitle;
+    this.aspectRatio = aspectRatio;
+  }
+}
+
+export function matchLocalDestination(prompt: string): { title: string; imageUrl: string } {
+  const p = (prompt || '').toLowerCase();
+  if (p.includes('naina devi') || p.includes('shakti peeth')) {
+    return { title: 'Shri Naina Devi Ji Temple', imageUrl: '/images/destinations/naina-devi.jpg' };
+  }
+  if (p.includes('bandla') || p.includes('paragliding')) {
+    return { title: 'Bandla Dhar Ridge', imageUrl: '/images/destinations/bandla-dhar.jpg' };
+  }
+  if (p.includes('bhakra') || p.includes('dam')) {
+    return { title: 'Bhakra Dam', imageUrl: '/images/destinations/bhakra-dam.jpg' };
+  }
+  if (p.includes('vyas') || p.includes('cave') || p.includes('gufa')) {
+    return { title: 'Vyas Gufa (Rishi Vyas Cave)', imageUrl: '/images/destinations/vyas-gufa.jpg' };
+  }
+  if (p.includes('markandeya') || p.includes('spring')) {
+    return { title: 'Markandeya Ji Temple', imageUrl: '/images/destinations/markandeya-temple.jpg' };
+  }
+  if (p.includes('koldam') || p.includes('gorge') || p.includes('canyon')) {
+    return { title: 'Koldam Hydro Reservoir', imageUrl: '/images/destinations/koldam.jpg' };
+  }
+  if (p.includes('bahadurpur') || p.includes('fort')) {
+    return { title: 'Bahadurpur Fort', imageUrl: '/images/destinations/bahadurpur-fort.jpg' };
+  }
+  return { title: 'Gobind Sagar Lake', imageUrl: '/images/destinations/gobind-sagar.jpg' };
+}
+
+function mapToGoogleAspectRatio(ratio: string): '1:1' | '3:4' | '4:3' | '9:16' | '16:9' {
+  switch (ratio) {
+    case '1:1': return '1:1';
+    case '3:4':
+    case '2:3': return '3:4';
+    case '4:3':
+    case '3:2': return '4:3';
+    case '9:16': return '9:16';
+    case '16:9':
+    case '21:9': return '16:9';
+    default: return '16:9';
+  }
+}
+
 export interface ImageGenParams {
   prompt: string;
   aspectRatio?: string;
@@ -646,56 +704,75 @@ export async function generateSceneImage(params: ImageGenParams) {
   const { prompt, aspectRatio = '16:9', quality = 'standard' } = params;
   const apiKey = getApiKey();
 
+  const validRatios = ['1:1', '2:3', '3:2', '3:4', '4:3', '9:16', '16:9', '21:9'];
+  const chosenRatio = validRatios.includes(aspectRatio) ? aspectRatio : '16:9';
+  const matchedDest = matchLocalDestination(prompt);
+
   if (!apiKey) {
-    throw new Error('Missing API key on the server.');
+    throw new ImageGenerationQuotaError(
+      'Image generation quota has been exceeded. Please try again later.',
+      matchedDest.imageUrl,
+      matchedDest.title,
+      chosenRatio
+    );
   }
 
   const ai = getGeminiClient();
-  const targetModel = quality === 'studio' ? 'gemini-3-pro-image-preview' : 'gemini-3.1-flash-image-preview';
-  const validRatios = ['1:1', '2:3', '3:2', '3:4', '4:3', '9:16', '16:9', '21:9'];
-  const chosenRatio = validRatios.includes(aspectRatio) ? aspectRatio : '16:9';
+  // Supported official Google GenAI model names from SDK documentation:
+  const targetModel = quality === 'studio' ? 'gemini-3.1-flash-image' : 'gemini-3.1-flash-lite-image';
+  const googleRatio = mapToGoogleAspectRatio(chosenRatio);
 
   const enhancedPrompt = prompt.toLowerCase().includes('bilaspur') || prompt.toLowerCase().includes('himachal')
     ? prompt
     : `${prompt}, scenic Bilaspur Himachal Pradesh India, Himalayan landscape, authentic cultural atmosphere, photorealistic travel photography`;
 
-  let response;
   try {
-    response = await ai.models.generateContent({
+    const response = await ai.models.generateContent({
       model: targetModel,
       contents: { parts: [{ text: enhancedPrompt }] },
       config: {
         imageConfig: {
-          aspectRatio: chosenRatio as any,
+          aspectRatio: googleRatio,
         },
       },
     });
-  } catch (primaryErr: any) {
-    const standardRatio = ['1:1', '3:4', '4:3', '9:16', '16:9'].includes(chosenRatio) ? chosenRatio : '16:9';
-    response = await ai.models.generateContent({
-      model: 'gemini-3.1-flash-image',
-      contents: { parts: [{ text: enhancedPrompt }] },
-      config: {
-        imageConfig: {
-          aspectRatio: standardRatio as any,
-        },
-      },
-    });
-  }
 
-  let imageUrl = '';
-  const parts = response.candidates?.[0]?.content?.parts || [];
-  for (const part of parts) {
-    if (part.inlineData?.data) {
-      const mimeType = part.inlineData.mimeType || 'image/jpeg';
-      imageUrl = `data:${mimeType};base64,${part.inlineData.data}`;
-      break;
+    let imageUrl = '';
+    const parts = response.candidates?.[0]?.content?.parts || [];
+    for (const part of parts) {
+      if (part.inlineData?.data) {
+        const mimeType = part.inlineData.mimeType || 'image/jpeg';
+        imageUrl = `data:${mimeType};base64,${part.inlineData.data}`;
+        break;
+      }
     }
-  }
 
-  if (!imageUrl) {
-    throw new Error('No image data returned from AI model.');
-  }
+    if (!imageUrl) {
+      throw new Error('No image data returned from AI model.');
+    }
 
-  return { imageUrl, prompt: enhancedPrompt, aspectRatio: chosenRatio };
+    return { imageUrl, prompt: enhancedPrompt, aspectRatio: chosenRatio };
+  } catch (err: any) {
+    const errMsg = (err.message || '').toLowerCase();
+    const isQuota =
+      err.status === 429 ||
+      errMsg.includes('429') ||
+      errMsg.includes('quota') ||
+      errMsg.includes('resource_exhausted') ||
+      errMsg.includes('rate-limit') ||
+      errMsg.includes('rate limit');
+
+    if (isQuota) {
+      // Specifically identify 429 quota exhaustion without retrying
+      throw new ImageGenerationQuotaError(
+        'Image generation quota has been exceeded. Please try again later.',
+        matchedDest.imageUrl,
+        matchedDest.title,
+        chosenRatio
+      );
+    }
+
+    // For any other non-quota error, propagate clean message
+    throw err;
+  }
 }

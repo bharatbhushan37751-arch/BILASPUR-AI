@@ -24,6 +24,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json(result);
   } catch (err: any) {
     console.error('Image generator serverless error:', err);
-    return res.status(500).json({ error: err.message || 'Internal Server Error' });
+
+    if (err.status === 429 || err.code === 'IMAGE_GENERATION_QUOTA_EXCEEDED') {
+      return res.status(429).json({
+        error: 'IMAGE_GENERATION_QUOTA_EXCEEDED',
+        message: 'Image generation quota has been exceeded. Please try again later.',
+        fallbackImageUrl: err.fallbackImageUrl,
+        fallbackTitle: err.fallbackTitle,
+        aspectRatio: err.aspectRatio,
+      });
+    }
+
+    return res.status(400).json({
+      error: 'IMAGE_GENERATION_FAILED',
+      message: err.message || 'Image generation failed. Please try again.',
+    });
   }
 }
