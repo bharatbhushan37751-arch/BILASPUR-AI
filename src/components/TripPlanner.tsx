@@ -22,6 +22,7 @@ import {
   AlertCircle 
 } from 'lucide-react';
 import { DEMO_TRIP_PRESETS } from '../data/bilaspurData';
+import { BilaspurWeather } from './BilaspurWeather';
 
 interface TripDayPlan {
   dayNumber: number;
@@ -392,6 +393,9 @@ export const TripPlanner: React.FC = () => {
             ))}
           </div>
         </div>
+
+        {/* Real-Time Bilaspur Weather & Activity Advisory */}
+        <BilaspurWeather />
 
         {/* Main Planner Grid: Left Form, Right Result */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">

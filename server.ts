@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { generateTripPlan, generateChatReply, generateSceneImage } from './api/_core';
+import { generateTripPlan, generateChatReply } from './api/_core';
 
 dotenv.config();
 
@@ -36,31 +36,6 @@ app.post('/api/chat', async (req, res) => {
     console.error('Chat error:', err);
     return res.status(500).json({
       error: 'Guide assistant encountered an error. ' + (err.message || 'Please try again.'),
-    });
-  }
-});
-
-// 3. IMAGE GENERATION ENDPOINT WITH ASPECT RATIO CONTROL
-app.post('/api/generate-image', async (req, res) => {
-  try {
-    const result = await generateSceneImage(req.body);
-    return res.json(result);
-  } catch (err: any) {
-    console.error('Image generator error:', err);
-
-    if (err.status === 429 || err.code === 'IMAGE_GENERATION_QUOTA_EXCEEDED') {
-      return res.status(429).json({
-        error: 'IMAGE_GENERATION_QUOTA_EXCEEDED',
-        message: 'Image generation quota has been exceeded. Please try again later.',
-        fallbackImageUrl: err.fallbackImageUrl,
-        fallbackTitle: err.fallbackTitle,
-        aspectRatio: err.aspectRatio,
-      });
-    }
-
-    return res.status(400).json({
-      error: 'IMAGE_GENERATION_FAILED',
-      message: err.message || 'Image generation failed. Please try again.',
     });
   }
 });
